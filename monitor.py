@@ -5,6 +5,7 @@ from datetime import datetime
 import config
 from time import sleep
 
+replication_down = False
 def check_slave():
     myconn = pymysql.connect(host=config.mysql_host,
                 user=config.mysql_user,
@@ -15,13 +16,24 @@ def check_slave():
         mycurs = myconn.cursor()
         mycurs.execute("SHOW SLAVE STATUS")
         slave_status = mycurs.fetchone()
-    
-        if slave_status["Slave_IO_Running"] == "No" or slave_status["Slave_SQL_Running"] == "No":
-            print "{0} - Replication is down".format(str(datetime.now()))
-            payload = json.dumps({
-                "text": "Your mysql replication slave has stopped replicating."
-            })
-            requests.post(config.slack_hook, data = payload)
+        
+        global replication_down
+
+        if (slave_status["Slave_IO_Running"] == "No" or slave_status["Slave_SQL_Running"] == "No"):
+            if not replication_down:
+                print "{0} - Replication is down".format(str(datetime.now()))
+                payload = json.dumps({
+                    "text": "Your mysql replication slave has stopped replicating."
+                })
+                requests.post(config.slack_hook, data = payload)
+        else:
+            if replication_down:
+                print "{0} - Replication is back up".format(str(datetime.now()))
+                payload = json.dumps({
+                    "text": "Your mysql replication slave is replicating again."
+                })
+                requests.post(config.slack_hook, data = payload)
+            replication_down = False
     except pymysql.Error as e:
         payload = json.dumps({
             "text": "MySQL related error:\n{0}".format(str(e))

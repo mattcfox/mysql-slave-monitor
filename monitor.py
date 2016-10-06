@@ -3,6 +3,7 @@ import requests
 import json
 from datetime import datetime
 import config
+from time import sleep
 
 def check_slave():
     myconn = pymysql.connect(host=config.mysql_host,

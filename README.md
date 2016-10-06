@@ -3,7 +3,7 @@ A small script to monitor a MySQL replica and report the status to slack
 
 ## Dependencies
 * requests
-* pymysql
+* PyMySQL
 
 ## Installation
 1. Clone it

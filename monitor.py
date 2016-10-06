@@ -21,6 +21,7 @@ def check_slave():
 
         if (slave_status["Slave_IO_Running"] == "No" or slave_status["Slave_SQL_Running"] == "No"):
             if not replication_down:
+                replication_down = True
                 print "{0} - Replication is down".format(str(datetime.now()))
                 payload = json.dumps({
                     "text": "Your mysql replication slave has stopped replicating."

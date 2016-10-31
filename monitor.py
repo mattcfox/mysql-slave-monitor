@@ -24,14 +24,14 @@ def check_slave():
                 replication_down = True
                 print "{0} - Replication is down".format(str(datetime.now()))
                 payload = json.dumps({
-                    "text": "Your mysql replication slave has stopped replicating."
+                    "text": "Your mysql replication slave, \"{0}\", has stopped replicating.".format(config.server_name)
                 })
                 requests.post(config.slack_hook, data = payload)
         else:
             if replication_down:
                 print "{0} - Replication is back up".format(str(datetime.now()))
                 payload = json.dumps({
-                    "text": "Your mysql replication slave is replicating again."
+                    "text": "Your mysql replication slave, \"{0}\", is replicating again.".format(config.server_name)
                 })
                 requests.post(config.slack_hook, data = payload)
             replication_down = False

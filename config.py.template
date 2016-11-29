@@ -3,3 +3,5 @@ mysql_user="USER"
 mysql_pass="PASSWORD"
 slack_hook="https://hooks.slack.com/services/SOMETHING/UNIQUE"
 server_name="my_server"
+# If you have more than one replication channel, uncomment this
+# replica_channels = ["channel_a", "channel_b"]

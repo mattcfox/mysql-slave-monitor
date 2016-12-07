@@ -46,7 +46,8 @@ def check_slave(channel=None):
                     })
                 requests.post(config.slack_hook, data=payload)
         else:
-            if replication_down[channel if channel else "default"]:
+            if replication_down.has_key(channel if channel else "default") and \
+                    replication_down[channel if channel else "default"]:
                 print "{0} - Replication is back up".format(str(datetime.now()))
                 if channel:
                     print "{0} - Replication is back up for server \"{1}\" on channel \"{2}\"" \

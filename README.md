@@ -1,5 +1,6 @@
 # mysql-slave-monitor
 A small script to monitor a MySQL replica and report the status to slack
+Multi-master replication monitoring is only supported on MariaDB(unless you feel like changing the query)
 
 ## Dependencies
 * requests

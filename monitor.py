@@ -16,7 +16,7 @@ def check_slave(channel=None):
     try:
         mycurs = myconn.cursor()
         if channel:
-            mycurs.execute("SHOW SLAVE STATUS FOR CHANNEL %s", [channel])
+            mycurs.execute("SHOW SLAVE %s STATUS", [channel])
         else:
             mycurs.execute("SHOW SLAVE STATUS")
 
